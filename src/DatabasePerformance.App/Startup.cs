@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using DatabasePerformance.DependencyInjection;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(DatabasePerformance.Startup))]
 
@@ -8,7 +9,12 @@ namespace DatabasePerformance
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            // TODO
+            var services = builder.Services;
+
+            services.AddSqlConnectionFactory();
+            services.AddBulkCopy();
+            services.AddDapper();
+            services.AddEFCore();
         }
     }
 }
