@@ -28,7 +28,8 @@ namespace DatabasePerformance
 
             logger.LogMetric("InsertPerformance", sw.ElapsedMilliseconds, new Dictionary<string, object>
             {
-                {"Repository", repository.GetType().Name}
+                {"Repository", repository.GetType().Name},
+                {"Count", count}
             });
             logger.LogInformation("After measure");
         }
