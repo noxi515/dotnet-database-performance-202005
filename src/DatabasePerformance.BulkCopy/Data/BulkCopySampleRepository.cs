@@ -18,6 +18,7 @@ namespace DatabasePerformance.Data
         public async ValueTask AddAsync(IEnumerable<SampleEntity> data)
         {
             await using var conn = _sqlConnectionFactory.Create();
+            await conn.OpenAsync();
 
             using var dataTable = CreateDataTable(data);
             var sqlBulkCopy = new SqlBulkCopy(conn)
@@ -30,9 +31,9 @@ namespace DatabasePerformance.Data
         private DataTable CreateDataTable(IEnumerable<SampleEntity> data)
         {
             var dataTable = new DataTable();
-            dataTable.Columns.Add("id", typeof(Guid?));
+            dataTable.Columns.Add("id", typeof(Guid));
             dataTable.Columns.Add("name", typeof(string));
-            dataTable.Columns.Add("age", typeof(int?));
+            dataTable.Columns.Add("age", typeof(int));
             dataTable.Columns.Add("date", typeof(DateTime));
 
             foreach (var entity in data)
